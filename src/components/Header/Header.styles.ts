@@ -1,0 +1,12 @@
+import styled from "styled-components";
+
+const WrapperHeader = styled.header`
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
+export { WrapperHeader };

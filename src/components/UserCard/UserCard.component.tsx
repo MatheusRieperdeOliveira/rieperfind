@@ -1,0 +1,56 @@
+import { useContext } from "react";
+import UserContext from "../../store/UserContext";
+
+import UserStat from "../UserStat/UserStat.component";
+import UserFooter from "../UserFooter/UserFooter.component";
+import UserHeader from "../UserHeader/UserHeader.component";
+
+import { Dump, InfoBio, InfoIcon, UserSection } from "./UserCard.styles";
+
+const UserCard = () => {
+  const { userdata } = useContext(UserContext);
+
+  const formatDate = (date: Date) => {
+    const newDate = new Date(date).toUTCString();
+    const UTCstring = newDate.split(", ")[1].slice(0, 11);
+    return UTCstring;
+  };
+
+  return (
+    <UserSection id="user-card">
+      <InfoIcon
+        src={userdata?.avatar_url}
+        alt="icon"
+        className={`${userdata?.login}-icon`}
+      />
+      <Dump>
+        <UserHeader
+          link={userdata?.html_url}
+          data={userdata ? formatDate(userdata?.created_at as Date) : Date()}
+          login={userdata?.login}
+          username={userdata?.name}
+        />
+        <InfoBio>
+          <dt>BIO</dt>
+          <dd>
+            {userdata?.bio ? userdata.bio : "-- none --"}
+          </dd>
+        </InfoBio>
+        <UserStat
+          followers={userdata?.followers}
+          following={userdata?.following}
+          repos={userdata?.public_repos}
+          html_url={userdata?.html_url}
+        />
+        <UserFooter
+          company={userdata?.company}
+          location={userdata?.location}
+          site={userdata?.blog}
+          twitter={userdata?.twitter_username}
+        />
+      </Dump>
+    </UserSection>
+  );
+};
+
+export default UserCard;
